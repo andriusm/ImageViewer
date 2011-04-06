@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1189868554 source:c:\andrius\src\cpp\imgview\main.cpp
+	<GL/glfw.h>
+
+1281278224 c:\program files\codeblocks\mingw\glfw-2.7\include\gl\glfw.h
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1302100664 source:c:\andrius\src\cpp\imgview\src\main.cpp
+	"main.h"
+	"viewer.h"
+	<stdlib.h>
+	<iostream>
+
+1302095815 c:\andrius\src\cpp\imgview\include\main.h
+
+1281281824 c:\program files (x86)\codeblocks\mingw\glfw-2.7\include\gl\glfw.h
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1302100523 source:c:\andrius\src\cpp\imgview\src\viewer.cpp
+	"main.h"
+	"viewer.h"
+	<stdio.h>
+	<stdlib.h>
+	<GL/glfw.h>
+	<webp/decode.h>
+
+1302100544 c:\andrius\src\cpp\imgview\include\viewer.h
+	"main.h"
+
