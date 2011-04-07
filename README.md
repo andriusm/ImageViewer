@@ -15,7 +15,7 @@ objectives are:
 Invocation
 ----------
 
-Usage: imgview image.webp
+    Usage: imgview image.webp
 
 Contacts
 --------
