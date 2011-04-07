@@ -8,7 +8,9 @@
 
 Viewer::Viewer() {}
 
-Viewer::~Viewer() {}
+Viewer::~Viewer() {
+    free(rect);
+}
 
 int Viewer::init()
 {
@@ -43,10 +45,10 @@ int Viewer::init()
     position.y = 0;
     position.z = 1;
 
-    rect = { -1,  1, 0,
-              1,  1, 0,
-              1, -1, 0,
-             -1, -1, 0 };
+    rect = { -1,  1,  0,
+              1,  1,  0,
+              1, -1,  0,
+             -1, -1,  0 };
 
     texCoords = { 0, 0,
                   1, 0,
