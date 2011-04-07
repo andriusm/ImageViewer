@@ -8,17 +8,15 @@
 
 Viewer::Viewer() {}
 
-Viewer::~Viewer() {
-    free(rect);
-}
+Viewer::~Viewer() {}
 
 int Viewer::init()
 {
     glfwInit();
-    glfwOpenWindowHint(GLFW_REFRESH_RATE, 30);
+    glfwOpenWindowHint(GLFW_REFRESH_RATE, 60);
     glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 0);
 
-    if( !glfwOpenWindow( 1280, 1024, 0, 0, 0, 0, 0, 0, GLFW_FULLSCREEN ) )
+    if( !glfwOpenWindow(1280, 1024, 0, 0, 0, 0, 0, 0, GLFW_FULLSCREEN) )
     {
         glfwTerminate();
         return -1;
@@ -32,28 +30,22 @@ int Viewer::init()
     glViewport( 0, 0, scrWidth, scrHeight );
     scrAspect = (float)scrWidth / (float)scrHeight;
 
-    glShadeModel(GL_SMOOTH);
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
     glEnable(GL_TEXTURE_2D);
-    glEnable(GL_COLOR_MATERIAL);
-    glEnable(GL_NORMALIZE);
-
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
 
     position.x = 0;
     position.y = 0;
     position.z = 1;
 
-    rect = { -1,  1,  0,
-              1,  1,  0,
-              1, -1,  0,
-             -1, -1,  0 };
+    rect = { 0,  1,  0,
+             1,  1,  0,
+             1,  0,  0,
+             0,  0,  0  };
 
     texCoords = { 0, 0,
                   1, 0,
                   1, 1,
-                  0, 1 };
+                  0, 1  };
 
     running = true;
 
@@ -62,19 +54,26 @@ int Viewer::init()
 
 void Viewer::draw()
 {
+    int vPort[4];
+    glGetIntegerv(GL_VIEWPORT, vPort);
+
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+
+    glOrtho(0, vPort[2], 0, vPort[3], -1, 1);
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+
     glClear( GL_COLOR_BUFFER_BIT );
-
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity();
-    gluPerspective(FOV, scrAspect, V_NEAR, V_FAR);
-    gluLookAt(0, 0, 128, 0, 0, 0, 0, 1, 0);
-
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity();
-
     putImage(position.x, position.y, position.z);
-
     glfwSwapBuffers();
+
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
 }
 
 void Viewer::display(char *fname)
@@ -85,7 +84,6 @@ void Viewer::display(char *fname)
     while(running)
     {
         glfwWaitEvents();
-
         running = !glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam( GLFW_OPENED);
 
         if(glfwGetKey(GLFW_KEY_KP_SUBTRACT)) position.z -= 1;
@@ -96,10 +94,8 @@ void Viewer::display(char *fname)
         if(glfwGetKey(GLFW_KEY_DOWN)) position.y += 1;
 
         position.z = glfwGetMouseWheel();
-
         draw();
     }
-
     glfwTerminate();
 }
 
@@ -114,9 +110,10 @@ void Viewer::readImage(char *fname)
     unsigned int data_size = 0;
 
     FILE* const in = fopen(fname, "rb");
-    if (!in) {
-      fprintf(stderr, "cannot open input file '%s'\n", fname);
-      return;
+    if (!in)
+    {
+        fprintf(stderr, "cannot open input file '%s'\n", fname);
+        return;
     }
     fseek(in, 0, SEEK_END);
     data_size = ftell(in);
@@ -124,9 +121,10 @@ void Viewer::readImage(char *fname)
     data = malloc(data_size);
     ok = (fread(data, data_size, 1, in) == 1);
     fclose(in);
-    if (!ok) {
-      free(data);
-      return;
+    if (!ok)
+    {
+        free(data);
+        return;
     }
 
     out = WebPDecodeRGB((const uint8_t*)data, data_size, &width, &height);
@@ -159,9 +157,7 @@ void Viewer::putImage(float x, float y, float z)
 
     glPushMatrix();
     glTranslatef(x, y, z);
-
-    glScalef(40*imgAspect, 40/imgAspect, 1);
-
+    glScalef(imgWidth, imgHeight, 1);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     glPopMatrix();
 
@@ -173,7 +169,7 @@ void Viewer::putImage(float x, float y, float z)
 void Viewer::loadImageAsTexture(BitmapResource bmp)
 {
     int colorType = GL_RGB;
-    if(bmp.colorBytes==4) colorType = GL_RGBA;
+    if(bmp.colorBytes == 4) colorType = GL_RGBA;
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
