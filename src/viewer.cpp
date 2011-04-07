@@ -8,6 +8,16 @@
 
 extern Point3D position;
 
+const float rect[12] = { -0.5,  0.5,  0,
+                          0.5,  0.5,  0,
+                          0.5, -0.5,  0,
+                         -0.5, -0.5,  0  };
+
+const float texCoords[8] = { 0, 0,
+                             1, 0,
+                             1, 1,
+                             0, 1  };
+
 Viewer::Viewer() {}
 
 Viewer::~Viewer() {}
@@ -46,18 +56,7 @@ int Viewer::init()
     position.y = scrHeight / 2;
     position.z = 1;
 
-    rect = { -0.5,  0.5,  0,
-              0.5,  0.5,  0,
-              0.5, -0.5,  0,
-             -0.5, -0.5,  0  };
-
-    texCoords = { 0, 0,
-                  1, 0,
-                  1, 1,
-                  0, 1  };
-
     running = true;
-
     return 0;
 }
 

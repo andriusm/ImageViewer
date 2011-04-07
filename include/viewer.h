@@ -21,8 +21,6 @@ class Viewer
         float scrAspect;
         int scrWidth, scrHeight;
         int imgWidth, imgHeight;
-        float rect[12];
-        float texCoords[8];
 
         void draw();
         void readImage(char *fname);

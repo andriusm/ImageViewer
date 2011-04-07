@@ -2,15 +2,15 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
 	<File name="include\main.h" open="1" top="0" tabpos="4">
-		<Cursor position="152" topLine="0" />
+		<Cursor position="302" topLine="0" />
 	</File>
 	<File name="include\viewer.h" open="1" top="0" tabpos="2">
-		<Cursor position="186" topLine="0" />
+		<Cursor position="81" topLine="0" />
 	</File>
-	<File name="src\main.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="353" topLine="0" />
+	<File name="src\main.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="180" topLine="0" />
 	</File>
-	<File name="src\viewer.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="1084" topLine="32" />
+	<File name="src\viewer.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="332" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

@@ -12,6 +12,13 @@ The main objectives are:
 - small size
 - portability (should compile on Windows (MinGW) / Linux / Mac OS X)
 
+Compilation
+-----------
+
+The easiest way to compile the viewer would be to use the Code:Blocks IDE (http://www.codeblocks.org/).
+You'll also need the GLFW library (http://www.glfw.org/) and the source code of WebP library
+(http://code.google.com/speed/webp/download.html).
+
 Invocation
 ----------
 
