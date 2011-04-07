@@ -1,16 +1,13 @@
 #include "main.h"
 #include "viewer.h"
-#include <stdlib.h>
-#include <iostream>
-
-using namespace std;
+#include <stdio.h>
 
 int main(int argc, char *argv[])
 {
     if(argc < 2)
     {
-        cout << "Usage: imgview image.webp" << endl;
-        exit(0);
+        printf("Usage: imgview image.webp");
+        return 0;
     }
 
     Viewer viewer;
