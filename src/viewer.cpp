@@ -6,9 +6,16 @@
 #include <GL/glfw.h>
 #include <webp/decode.h>
 
+extern Point3D position;
+
 Viewer::Viewer() {}
 
 Viewer::~Viewer() {}
+
+void GLFWCALL mouseWheel(int pos)
+{
+    position.z = pos;
+}
 
 int Viewer::init()
 {
@@ -25,6 +32,8 @@ int Viewer::init()
     glfwSetWindowTitle(APP_NAME);
     glfwSwapInterval(1);
 
+    glfwSetMouseWheelCallback(mouseWheel);
+
     glfwGetWindowSize( &scrWidth, &scrHeight );
     scrHeight = scrHeight > 0 ? scrHeight : 1;
     glViewport( 0, 0, scrWidth, scrHeight );
@@ -33,14 +42,14 @@ int Viewer::init()
     glEnable(GL_TEXTURE_2D);
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
 
-    position.x = 0;
-    position.y = 0;
+    position.x = scrWidth / 2;
+    position.y = scrHeight / 2;
     position.z = 1;
 
-    rect = { 0,  1,  0,
-             1,  1,  0,
-             1,  0,  0,
-             0,  0,  0  };
+    rect = { -0.5,  0.5,  0,
+              0.5,  0.5,  0,
+              0.5, -0.5,  0,
+             -0.5, -0.5,  0  };
 
     texCoords = { 0, 0,
                   1, 0,
@@ -61,13 +70,13 @@ void Viewer::draw()
     glPushMatrix();
     glLoadIdentity();
 
-    glOrtho(0, vPort[2], 0, vPort[3], -1, 1);
+    glOrtho(0, vPort[2], 0, vPort[3], V_NEAR, V_FAR);
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glLoadIdentity();
 
     glClear( GL_COLOR_BUFFER_BIT );
-    putImage(position.x, position.y, position.z);
+    putImage(position.x, position.y, 0);
     glfwSwapBuffers();
 
     glMatrixMode(GL_PROJECTION);
@@ -86,14 +95,24 @@ void Viewer::display(char *fname)
         glfwWaitEvents();
         running = !glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam( GLFW_OPENED);
 
-        if(glfwGetKey(GLFW_KEY_KP_SUBTRACT)) position.z -= 1;
-        if(glfwGetKey(GLFW_KEY_KP_ADD)) position.z += 1;
+        //position.z = glfwGetMouseWheel();
+
+        if(glfwGetKey(GLFW_KEY_KP_SUBTRACT) || glfwGetKey('-'))
+        {
+            position.z -= 1;
+            continue;
+        }
+        if(glfwGetKey(GLFW_KEY_KP_ADD) || glfwGetKey('='))
+        {
+            position.z += 1;
+            continue;
+        }
+
         if(glfwGetKey(GLFW_KEY_LEFT)) position.x += 1;
         if(glfwGetKey(GLFW_KEY_RIGHT)) position.x -= 1;
         if(glfwGetKey(GLFW_KEY_UP)) position.y -= 1;
         if(glfwGetKey(GLFW_KEY_DOWN)) position.y += 1;
 
-        position.z = glfwGetMouseWheel();
         draw();
     }
     glfwTerminate();
@@ -155,9 +174,11 @@ void Viewer::putImage(float x, float y, float z)
     glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
     glVertexPointer(3, GL_FLOAT, 0, rect);
 
+    float scale = 1 + (position.z) / (float)10;
+
     glPushMatrix();
     glTranslatef(x, y, z);
-    glScalef(imgWidth, imgHeight, 1);
+    glScalef(imgWidth*scale, imgHeight*scale, 1);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     glPopMatrix();
 

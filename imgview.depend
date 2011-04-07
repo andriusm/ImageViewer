@@ -8,13 +8,13 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1302160208 source:c:\andrius\src\cpp\imgview\src\main.cpp
+1302164079 source:c:\andrius\src\cpp\imgview\src\main.cpp
 	"main.h"
 	"viewer.h"
 	<stdio.h>
 	<stdlib.h>
 
-1302159010 c:\andrius\src\cpp\imgview\include\main.h
+1302162999 c:\andrius\src\cpp\imgview\include\main.h
 
 1281281824 c:\program files (x86)\codeblocks\mingw\glfw-2.7\include\gl\glfw.h
 	<OpenGL/gl.h>
@@ -22,7 +22,7 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1302100523 source:c:\andrius\src\cpp\imgview\src\viewer.cpp
+1302164093 source:c:\andrius\src\cpp\imgview\src\viewer.cpp
 	"main.h"
 	"viewer.h"
 	<stdio.h>
@@ -30,6 +30,7 @@
 	<GL/glfw.h>
 	<webp/decode.h>
 
-1302160708 c:\andrius\src\cpp\imgview\include\viewer.h
+1302164058 c:\andrius\src\cpp\imgview\include\viewer.h
 	"main.h"
+	<GL/glfw.h>
 

@@ -3,9 +3,9 @@
 
 #define APP_NAME "Image Viewer 0.0.1"
 
-#define FOV      45.0f
-#define V_NEAR     0.1f
-#define V_FAR      1000.0f
+#define FOV         45.0f
+#define V_NEAR      -1
+#define V_FAR       1
 
 typedef struct
 {

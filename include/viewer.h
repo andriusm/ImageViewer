@@ -2,6 +2,7 @@
 #define VIEWER_H
 
 #include "main.h"
+#include <GL/glfw.h>
 
 class Viewer
 {
@@ -18,7 +19,6 @@ class Viewer
         bool running;
         float imgAspect;
         float scrAspect;
-        Point3D position;
         int scrWidth, scrHeight;
         int imgWidth, imgHeight;
         float rect[12];

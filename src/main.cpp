@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+Point3D position;
+
 int main(int argc, char *argv[])
 {
     if(argc < 2)
@@ -12,8 +14,8 @@ int main(int argc, char *argv[])
     }
 
     Viewer viewer;
-    if(viewer.init()) return -1;
 
+    if(viewer.init()) return -1;
     viewer.display(argv[1]);
 
     return 0;
